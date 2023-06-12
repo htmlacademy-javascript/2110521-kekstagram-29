@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Aleksei Bissenek](https://up.htmlacademy.ru/javascript/29/user/2110521).
-* Наставник: `Неизвестно`.
+* Наставник: [Максим Калин] (https://htmlacademy.ru/profile/id992315) .
 
 ---
 
