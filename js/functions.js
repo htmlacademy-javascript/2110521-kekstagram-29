@@ -6,6 +6,7 @@ const checkStringLength = (string, length) => {
   }
   return false;
 };
+checkStringLength();
 
 //Функция для проверки, является ли строка палиндромом
 
@@ -20,6 +21,7 @@ const checkForPalindrome = (string) => {
   }
   return false;
 };
+checkForPalindrome();
 
 //Функция извлекает число из строки
 
@@ -35,13 +37,16 @@ const getNumberFromString = (string) => {
   }
   return result;
 };
+getNumberFromString();
 
-console.log("checkStringLength");
-console.log(checkStringLength('проверяемая строка', 20));
+/* console.log(checkStringLength('проверяемая строка', 20));
 console.log(checkStringLength('проверяемая строка', 18));
 console.log(checkStringLength('проверяемая строка', 10));
 
-console.log("getNumberFromString");
+console.log(checkForPalindrome('топот'));
+console.log(checkForPalindrome('ДовОд'));
+console.log(checkForPalindrome('Кекс'));
+
 console.log(getNumberFromString('2023 год'));
 console.log(getNumberFromString('ECMAScript 2022'));
 console.log(getNumberFromString('1 кефир, 0.5 батона'));
@@ -49,4 +54,4 @@ console.log(getNumberFromString('агент 007'));
 console.log(getNumberFromString('а я томат'));
 console.log(getNumberFromString(2023));
 console.log(getNumberFromString(-1));
-console.log(getNumberFromString(1.5));
+console.log(getNumberFromString(1.5)); */
