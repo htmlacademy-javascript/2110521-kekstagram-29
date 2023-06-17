@@ -6,7 +6,7 @@ const checkStringLength = (string, length) => {
   }
   return false;
 };
-checkStringLength();
+checkStringLength(striff, 2);
 
 //Функция для проверки, является ли строка палиндромом
 
@@ -21,7 +21,7 @@ const checkForPalindrome = (string) => {
   }
   return false;
 };
-checkForPalindrome();
+checkForPalindrome(sfdaf);
 
 //Функция извлекает число из строки
 
@@ -37,7 +37,7 @@ const getNumberFromString = (string) => {
   }
   return result;
 };
-getNumberFromString();
+getNumberFromString(awdwad234);
 
 /* console.log(checkStringLength('проверяемая строка', 20));
 console.log(checkStringLength('проверяемая строка', 18));
