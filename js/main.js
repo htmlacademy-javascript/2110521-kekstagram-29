@@ -46,7 +46,7 @@ const description = [
 
 // Вспомогательные функции
 const generatePhotoId = getRandomInteger(0, 25);
-const generateMessageId = getRandomInteger(1, 100);
+const generateMessageId = getRandomInteger(1, 100); // Как сделать так чтоб случайное число не повторялось
 
 // Генератор рандомного индекса
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
@@ -64,7 +64,7 @@ const generateMessage = () => {
 const createComment = () => ({
   id: generateMessageId(),
   avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
-  message: generateMessage(getRandomInteger(1, 2)).join(' '),
+  message: generateMessage(),
   name: getRandomArrayElement(namePool),
 });
 
