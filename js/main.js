@@ -1,13 +1,5 @@
 const getRandomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-
-/* const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-}; */
-
 //Массивы
 const messagePool = [
   'Всё отлично!',
@@ -44,33 +36,23 @@ const description = [
   'Скоро!!!',
 ];
 
-// Вспомогательные функции
-const generatePhotoId = getRandomInteger(0, 25);
-const generateMessageId = getRandomInteger(1, 100); // Как сделать так чтоб случайное число не повторялось
-
 // Генератор рандомного индекса
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-//Генерируем сообщение
-const generateMessage = () => {
-  const message = [];
-  while (message.length < getRandomInteger(0, 1)) {
-    message.push(getRandomArrayElement(messagePool));
-  }
-  return message;
-};
-
 //Генерируем коммент
 const createComment = () => ({
-  id: generateMessageId(),
+  id: getRandomInteger(1, 100),
   avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
-  message: generateMessage(),
+  message:
+  getRandomInteger(1, 2) > 1
+    ? getRandomArrayElement(messagePool) + ' ' + getRandomArrayElement(messagePool)
+    : getRandomArrayElement(messagePool),
   name: getRandomArrayElement(namePool),
 });
 
 //Генерируем Фото
 const createPhoto = () => ({
-  id: generatePhotoId(),
+  id: getRandomInteger(0, 25),
   url: `photos/${getRandomInteger(1, 25)}.jpg`,
   description: getRandomArrayElement(description),
   likes: getRandomInteger(15, 200),
