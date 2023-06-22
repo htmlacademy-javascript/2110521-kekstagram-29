@@ -6,7 +6,7 @@ const checkStringLength = (string, length) => {
   }
   return false;
 };
-checkStringLength(striff, 2);
+
 
 //Функция для проверки, является ли строка палиндромом
 
@@ -21,7 +21,7 @@ const checkForPalindrome = (string) => {
   }
   return false;
 };
-checkForPalindrome(sfdaf);
+
 
 //Функция извлекает число из строки
 
@@ -37,12 +37,13 @@ const getNumberFromString = (string) => {
   }
   return result;
 };
-getNumberFromString(awdwad234);
 
-/* console.log(checkStringLength('проверяемая строка', 20));
+
+console.log(checkStringLength('проверяемая строка', 20));
 console.log(checkStringLength('проверяемая строка', 18));
 console.log(checkStringLength('проверяемая строка', 10));
 
+console.log('топот');
 console.log(checkForPalindrome('топот'));
 console.log(checkForPalindrome('ДовОд'));
 console.log(checkForPalindrome('Кекс'));
@@ -54,4 +55,4 @@ console.log(getNumberFromString('агент 007'));
 console.log(getNumberFromString('а я томат'));
 console.log(getNumberFromString(2023));
 console.log(getNumberFromString(-1));
-console.log(getNumberFromString(1.5)); */
+console.log(getNumberFromString(1.5));
