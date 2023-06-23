@@ -1,58 +1,30 @@
-//Функция для проверки длины строки.
+/* Напишите функцию, которая принимает время начала и конца рабочего дня, а также время старта и продолжительность встречи в минутах и возвращает true, если встреча не выходит за рамки рабочего дня, и false, если выходит.
 
-const checkStringLength = (string, length) => {
-  if (string.length <= length) {
-    return true;
-  }
-  return false;
+Время указывается в виде строки в формате часы:минуты. Для указания часов и минут могут использоваться как две цифры, так и одна. Например, 8 часов 5 минут могут быть указаны по-разному: 08:05, 8:5, 08:5 или 8:05.
+
+Продолжительность задаётся числом. Гарантируется, что и рабочий день, и встреча укладываются в одни календарные сутки.
+
+/*
+'8:00' - начало рабочего дня
+'17:30' - конец рабочего дня
+'14:00' - начало встречи
+90 - продолжительность встречи в минутах
+*/
+/* имяФункции('08:00', '17:30', '14:00', 90); // true
+имяФункции('8:0', '10:0', '8:0', 120);     // true
+имяФункции('08:00', '14:30', '14:00', 90); // false
+имяФункции('14:00', '17:30', '08:0', 90);  // false
+имяФункции('8:00', '17:30', '08:00', 900); // false */
+
+const calcMinInHour = timeInHour => {
+  const timeParts = timeInHour.split(':');
+  return Number(timeParts[0] * 60) + Number(timeParts[1]);
 };
 
-
-//Функция для проверки, является ли строка палиндромом
-
-const checkForPalindrome = (string) => {
-  const normalizeString = string.replaceAll(' ', '').toUpperCase();
-  let result = '';
-  for (let i = normalizeString.length - 1; i >= 0; i--) {
-    result += normalizeString.at(i);
-  }
-  if (result === normalizeString) {
-    return true;
-  }
-  return false;
-};
-
-
-//Функция извлекает число из строки
-
-const getNumberFromString = (string) => {
-  const checkoutString = String(string);
-  let numbers;
-  let result = '';
-  for (const i in checkoutString) {
-    numbers = parseInt(checkoutString[i], 10);
-    if (!Number.isNaN(numbers)) {
-      result += numbers;
-    }
-  }
-  return result;
-};
-
-
-console.log(checkStringLength('проверяемая строка', 20));
-console.log(checkStringLength('проверяемая строка', 18));
-console.log(checkStringLength('проверяемая строка', 10));
-
-console.log('топот');
-console.log(checkForPalindrome('топот'));
-console.log(checkForPalindrome('ДовОд'));
-console.log(checkForPalindrome('Кекс'));
-
-console.log(getNumberFromString('2023 год'));
-console.log(getNumberFromString('ECMAScript 2022'));
-console.log(getNumberFromString('1 кефир, 0.5 батона'));
-console.log(getNumberFromString('агент 007'));
-console.log(getNumberFromString('а я томат'));
-console.log(getNumberFromString(2023));
-console.log(getNumberFromString(-1));
-console.log(getNumberFromString(1.5));
+const checkWorkTime = (dayStart, dayEnd, meetingStart, duration) =>
+  calcMinInHour(meetingStart) >= calcMinInHour(dayStart) &&
+  calcMinInHour(meetingStart) + duration <= calcMinInHour(dayEnd);
+/*
+  console.log(checkWorkTime('08:00', '17:30', '14:00', 90));
+  console.log(checkWorkTime('8:0', '10:0', '8:0', 120));
+  console.log(checkWorkTime('8:00', '17:30', '08:00', 900)); */
