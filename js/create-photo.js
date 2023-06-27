@@ -39,9 +39,19 @@ const description = [
 // Генератор рандомного индекса
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
+// Counter
+function makeCounter() {
+  let currentCount = 0;
+  return () => {
+    currentCount += 1;
+    return currentCount;
+  };
+}
+let counter = makeCounter();
+
 //Генерируем коммент
 const createComment = () => ({
-  id: getRandomInteger(1, 100),
+  id: 100 + counter(),
   avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
   message:
   getRandomInteger(1, 2) > 1
@@ -52,7 +62,7 @@ const createComment = () => ({
 
 //Генерируем Фото
 const createPhoto = () => ({
-  id: getRandomInteger(0, 25),
+  id: counter(),
   url: `photos/${getRandomInteger(1, 25)}.jpg`,
   description: getRandomArrayElement(description),
   likes: getRandomInteger(15, 200),
