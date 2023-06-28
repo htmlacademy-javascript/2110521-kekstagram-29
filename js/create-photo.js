@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomArrayElement} from './util.js';
+import {getRandomInteger, getRandomArrayElement, counter} from './util.js';
 
 //Массивы
 const messagePool = [
@@ -35,9 +35,6 @@ const description = [
   'А скоро Новый Год =)',
   'Скоро!!!',
 ];
-
-// Генератор рандомного индекса
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 // Counter
 function makeCounter() {

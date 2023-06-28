@@ -37,4 +37,4 @@ function collisionRandom(lower, upper) {
 
 let result = collisionRandom(5, 8);
 
-export {getRandomInteger, getRandomArrayElement};
+export {getRandomInteger, getRandomArrayElement, counter};
