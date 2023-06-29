@@ -1,3 +1,1 @@
-import {generatePhoto} from './utils.js';
-
-generatePhoto();
+import {generatePhoto} from './create-photo.js';

@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomArrayElement, counter} from './util.js';
+import {getRandomInteger, getRandomArrayElement} from './utils.js';
 
 //Массивы
 const messagePool = [
