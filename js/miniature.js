@@ -1,7 +1,7 @@
 import {generatePhoto} from './create-photo.js';
 
 const sectionOtherUSers = document.querySelector('.pictures');
-sectionOtherUSers.querySelector('.picture__title').classList.remove('visually-hidden');
+sectionOtherUSers.querySelector('.pictures__title').classList.remove('visually-hidden');
 
 const similarFotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
@@ -20,4 +20,4 @@ similarFotos.forEach(({url, comments, likes, description}) => {
 
 sectionOtherUSers.appendChild(similarFotoFragment);
 
-export {similarFotos};
+export {sectionOtherUSers};
