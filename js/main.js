@@ -1,1 +1,2 @@
-import {generatePhoto} from './create-photo.js';
+import './miniature.js';
+import './full-screen-pic.js';
