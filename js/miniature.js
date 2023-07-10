@@ -5,7 +5,7 @@ sectionOtherUSers.querySelector('.picture__title').classList.remove('visually-hi
 
 const similarFotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const similarFotos = createDescriptionFotos();
+const similarFotos = generatePhoto();
 const similarFotoFragment = document.createDocumentFragment();
 
 similarFotos.forEach(({url, comments, likes, description}) => {
