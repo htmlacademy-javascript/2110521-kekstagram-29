@@ -1,23 +1,20 @@
 import {generatePhoto} from './create-photo.js';
 
 const sectionOtherUSers = document.querySelector('.pictures');
-sectionOtherUSers.querySelector('.pictures__title').classList.remove('visually-hidden');
+const similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const similarFotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const similarPhotos = generatePhoto();
+const similarPhotoFragment = document.createDocumentFragment();
 
-const similarFotos = generatePhoto();
-const similarFotoFragment = document.createDocumentFragment();
-
-similarFotos.forEach(({url, comments, likes, description}) => {
-  const fotoElement = similarFotoTemplate.cloneNode(true);
-  fotoElement.querySelector('.picture__img').src = url;
-  fotoElement.querySelector('.picture__comments').textContent = comments.length;
-  fotoElement.querySelector('.picture__likes').textContent = likes;
-  fotoElement.querySelector('.picture__img').alt = description
-  fotoElement.comments = comments;
-  similarFotoFragment.appendChild(fotoElement);
+similarPhotos.forEach(({url, comments, likes, description}) => {
+  const photoElement = similarPhotoTemplate.cloneNode(true);
+  photoElement.querySelector('.picture__img').src = url;
+  photoElement.querySelector('.picture__comments').textContent = comments.length;
+  photoElement.querySelector('.picture__likes').textContent = likes;
+  photoElement.querySelector('.picture__img').alt = description
+  similarPhotoFragment.appendChild(photoElement);
 });
 
-sectionOtherUSers.appendChild(similarFotoFragment);
+sectionOtherUSers.appendChild(similarPhotoFragment);
 
 export {sectionOtherUSers};
