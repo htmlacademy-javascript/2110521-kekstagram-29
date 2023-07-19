@@ -36,6 +36,33 @@ const description = [
   'Скоро!!!',
 ];
 
+const getRandomPositiveInteger = (a, b) => {
+  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
+  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
+};
+
+//id generator
+const createRandomIdGenerator = (min, max) => {
+  const previousValue = [];
+
+  return function () {
+    let currentValue = getRandomPositiveInteger(min, max);
+    if (previousValue.length >= (max - min +1)) {
+      console.log(previousValue.length);
+      return null;
+    }
+    while (previousValue.includes(currentValue)){
+      currentValue = getRandomPositiveInteger(min, max);
+    }
+    previousValue.push(currentValue);
+    return currentValue;
+  };
+};
+
+const generateUrlId = createRandomIdGenerator(1, 25);
+
 // Counter
 function makeCounter() {
   let currentCount = 0;
@@ -44,7 +71,7 @@ function makeCounter() {
     return currentCount;
   };
 }
-let counter = makeCounter();
+let counter = makeCounter(1, 25);
 
 //Генерируем коммент
 const createComment = () => ({
@@ -60,12 +87,12 @@ const createComment = () => ({
 //Генерируем Фото
 const createPhoto = () => ({
   id: counter(),
-  url: `photos/${getRandomInteger(1, 25)}.jpg`,
+  url: `photos/${generateUrlId()}.jpg`,
   description: getRandomArrayElement(description),
   likes: getRandomInteger(15, 200),
-  comment: Array.from({ length: getRandomInteger(0, 30) }, createComment),
+  comments: Array.from({ length: getRandomInteger(0, 30) }, createComment),
 });
 
-const generatePhoto = Array.from({ length: 25 }, createPhoto);
+const generatePhoto = () => Array.from({ length: 25 }, createPhoto);
 
 export {generatePhoto};
