@@ -1,1 +1,1 @@
-import './create-photo.js';
+import {sectionOtherUSers} from './miniature.js';
