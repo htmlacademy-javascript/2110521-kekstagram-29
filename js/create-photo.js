@@ -49,8 +49,7 @@ const createRandomIdGenerator = (min, max) => {
 
   return function () {
     let currentValue = getRandomPositiveInteger(min, max);
-    if (previousValue.length >= (max - min +1)) {
-      console.log(previousValue.length);
+    if (previousValue.length >= (max - min + 1)) {
       return null;
     }
     while (previousValue.includes(currentValue)){
@@ -62,20 +61,12 @@ const createRandomIdGenerator = (min, max) => {
 };
 
 const generateUrlId = createRandomIdGenerator(1, 25);
-
-// Counter
-function makeCounter() {
-  let currentCount = 0;
-  return () => {
-    currentCount += 1;
-    return currentCount;
-  };
-}
-let counter = makeCounter(1, 25);
+const generatePhotoId = createRandomIdGenerator(1, 25);
+const generateCommentId = createRandomIdGenerator(1,1000);
 
 //Генерируем коммент
 const createComment = () => ({
-  id: 100 + counter(),
+  id: generateCommentId(),
   avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
   message:
   getRandomInteger(1, 2) > 1
@@ -86,7 +77,7 @@ const createComment = () => ({
 
 //Генерируем Фото
 const createPhoto = () => ({
-  id: counter(),
+  id: generatePhotoId(),
   url: `photos/${generateUrlId()}.jpg`,
   description: getRandomArrayElement(description),
   likes: getRandomInteger(15, 200),

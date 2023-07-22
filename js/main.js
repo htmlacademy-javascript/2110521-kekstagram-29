@@ -1,1 +1,2 @@
-import {sectionOtherUSers} from './miniature.js';
+import './miniature.js';
+import './full-screen-pic.js';
