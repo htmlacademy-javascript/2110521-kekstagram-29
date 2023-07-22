@@ -92,19 +92,19 @@ function onFiveComments () {
 }
 
 //Обновление строки с количеством комментариев + исправление поведения при изначальном 0 комментариев
-/* function updateCommentCount () {
+function updateCommentCount () {
   if (+commentsCount.textContent > 0) {
     commentCount.innerHTML = `${commentsList.querySelectorAll('.social__comment').length} из ${commentsCount.textContent} комментариев`;
   } else {
     commentCount.innerHTML = '0 из 0 комментариев';
   }
-} */
+}
 
 //Убираю/добавляю кнопку загрузить ещё, если комментарии кончились
-/* function hideCommentLoader () {
+function hideCommentLoader () {
   if (partCommentsArray.length === 0) {
     commentsLoader.classList.add('hidden');
   } else {
     commentsLoader.classList.remove('hidden');
   }
-} */
+}
