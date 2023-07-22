@@ -17,4 +17,4 @@ similarPhotos.forEach(({url, comments, likes, description}) => {
 
 sectionOtherUSers.appendChild(similarPhotoFragment);
 
-export {sectionOtherUSers};
+export {similarPhotos};
