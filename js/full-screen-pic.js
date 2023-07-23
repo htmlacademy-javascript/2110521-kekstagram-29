@@ -45,7 +45,7 @@ const onFullPicCancel = () => {
 function openUserModal () {
   commentsLoader.addEventListener ('click', (onFiveComments));
   fullPictureContainer.classList.remove('hidden');
-  document.body.classList.remove('modal-open');
+  document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   fullPicCancel.addEventListener('click', onFullPicCancel);
   otherPicContainer.removeEventListener('click', onPicClick);
@@ -92,19 +92,19 @@ function onFiveComments () {
 }
 
 //Обновление строки с количеством комментариев + исправление поведения при изначальном 0 комментариев
-/* function updateCommentCount () {
+function updateCommentCount () {
   if (+commentsCount.textContent > 0) {
     commentCount.innerHTML = `${commentsList.querySelectorAll('.social__comment').length} из ${commentsCount.textContent} комментариев`;
   } else {
     commentCount.innerHTML = '0 из 0 комментариев';
   }
-} */
+}
 
 //Убираю/добавляю кнопку загрузить ещё, если комментарии кончились
-/* function hideCommentLoader () {
+function hideCommentLoader () {
   if (partCommentsArray.length === 0) {
     commentsLoader.classList.add('hidden');
   } else {
     commentsLoader.classList.remove('hidden');
   }
-} */
+}

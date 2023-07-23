@@ -61,8 +61,17 @@ const createRandomIdGenerator = (min, max) => {
 };
 
 const generateUrlId = createRandomIdGenerator(1, 25);
-const generatePhotoId = createRandomIdGenerator(1, 25);
 const generateCommentId = createRandomIdGenerator(1,1000);
+const createIdGenerator = () => {
+  let lastGeneratedId = 0
+
+  return () => {
+    lastGeneratedId += 1;
+    return lastGeneratedId
+  };
+};
+
+let idCounter = createIdGenerator();
 
 //Генерируем коммент
 const createComment = () => ({
@@ -77,7 +86,7 @@ const createComment = () => ({
 
 //Генерируем Фото
 const createPhoto = () => ({
-  id: generatePhotoId(),
+  id: idCounter(),
   url: `photos/${generateUrlId()}.jpg`,
   description: getRandomArrayElement(description),
   likes: getRandomInteger(15, 200),
