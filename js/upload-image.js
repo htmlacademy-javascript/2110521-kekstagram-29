@@ -1,3 +1,5 @@
+//import './form-validation.js';
+
 const SCALE_SIZES = {
   step: 25,
   max: 100,
@@ -15,11 +17,12 @@ const scaleControlValueElement = document.querySelector('.scale__control--value'
 const textHashtagsElement = document.querySelector('.text__hashtags');
 const textDescriptionElement = document.querySelector('.text__description');
 const imgUploadPreviewImgElement = document.querySelector('.img-upload__preview img');
+//const formElement = document.querySelector('#upload-select-image');
 
-const pristine = new Pristine (form, {
+/* const pristine = new Pristine (form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
-});
+}); */
 
 const onModalCloseClick = () => {
   closeModal();
@@ -68,6 +71,7 @@ const addModalEventListeneres = () => {
   document.addEventListener('keydown', onModalCloseEscape);
   scaleControlPlusElement.addEventListener('click', onPictureIncrease);
   scaleControlMinusElement.addEventListener('click', onPictureDecrease);
+  //formElement.addEventListener('submit', onSubmit);
   textHashtagsElement.addEventListener('keydown', onInputKeydown);
   textDescriptionElement.addEventListener('keydown', onInputKeydown);
 };
@@ -77,6 +81,7 @@ const removeModalEventListeneres = () => {
   document.removeEventListener('keydown', onModalCloseEscape);
   scaleControlPlusElement.removeEventListener('click', onPictureIncrease);
   scaleControlMinusElement.removeEventListener('click', onPictureDecrease);
+  //formElement.removeEventListener('submit', onSubmit);
   textHashtagsElement.removeEventListener('keydown', onInputKeydown);
   textDescriptionElement.removeEventListener('keydown', onInputKeydown);
 };
@@ -97,7 +102,6 @@ function closeModal() {
   document.body.classList.remove('modal-open');
   textHashtagsElement.value = '';
   textDescriptionElement.value = '';
-
   removeModalEventListeneres();
 }
 
