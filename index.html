@@ -51,8 +51,7 @@
                   <!-- Изменение размера изображения -->
                   <fieldset class="img-upload__scale  scale">
                     <button type="button" class="scale__control  scale__control--smaller">Уменьшить</button>
-                    <input type="number" class="scale__control  scale__control--value" step="25" min="25" max="100"
-                      value="100" title="Image Scale" name="scale" readonly>
+                    <input type="number" class="scale__control  scale__control--value" value="100%" title="Image Scale" name="scale" readonly>
                     <button type="button" class="scale__control  scale__control--bigger">Увеличить</button>
                   </fieldset>
 
@@ -132,7 +131,8 @@
                   </div>
                   <div class="img-upload__field-wrapper">
                     <textarea class="text__description" name="description" placeholder="Ваш комментарий..."
-                      maxlength="140"></textarea>
+                    data-pristine-maxlength="140"
+                    data-pristine-maxlength-message="длина комментария не может составлять больше 140 символов"></textarea>
                   </div>
                 </fieldset>
 
