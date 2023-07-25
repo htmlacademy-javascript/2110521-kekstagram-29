@@ -7,6 +7,7 @@ const pristine = new Pristine(formElement, {
   errorTextParent: 'img-upload__filed-wrapper',
 });
 
+// проверяем валидность
 const onSubmit = (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();

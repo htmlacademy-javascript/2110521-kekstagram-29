@@ -71,7 +71,7 @@ function onPicClick (evt) {
     commentsCount.textContent = clickPicture.querySelector('.picture__comments').textContent;
     photoDescription.textContent = clickPicture.querySelector('.picture__img').alt;
     commentsList.innerHTML = '';
-    partCommentsArray = similarPhotos.find((element) => element.id === +clickPicture.dataset.id).comments.slice(0)
+    partCommentsArray = similarPhotos.find((element) => element.id === +clickPicture.dataset.id).comments.slice(0);
     onFiveComments(partCommentsArray);
     openUserModal();
   }

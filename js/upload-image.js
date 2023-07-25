@@ -8,7 +8,7 @@ const SCALE_SIZES = {
 };
 let currentScale = SCALE_SIZES.max;
 
-const form = document.querySelector('.img-upload__form')
+const form = document.querySelector('.img-upload__form');
 const imgUploadInputElement = document.querySelector('#upload-file');
 const imgUploadOverlayElement = document.querySelector('.img-upload__overlay');
 const imgUploadCloseElement = document.querySelector('.img-upload__cancel');
@@ -21,6 +21,7 @@ const imgUploadPreviewImgElement = document.querySelector('.img-upload__preview 
 const formElement = document.querySelector('#upload-select-image');
 const effectsListElement = document.querySelector('.effects__list');
 
+// на ретро сказали такого подключения будет достаточно, но еслинт ругается
 const pristine = new Pristine (form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',

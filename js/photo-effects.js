@@ -51,7 +51,7 @@ let effect;
 const onSliderValueUpdate = () => {
   if (effect) {
     const sliderValue = sliderElement.noUiSlider.get();
-     // как работает computedStyleMap ?
+    // как работает computedStyleMap
     imgUploadPreviewImgElement.computedStyleMap.filter = `${effect.filter}(${sliderValue}${effect.measure})`;
     effectLevelValueElement.value = parseFloat(sliderValue);
   }
