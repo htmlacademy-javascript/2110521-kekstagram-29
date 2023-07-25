@@ -1,13 +1,16 @@
 const HASHTAGS_MAX_NUMBER = 5;
 const formElement = document.querySelector('#upload-select-image');
-const hashtagsInputElement = formElement.querySelector('text__hashtags');
+const descriptionFieldElement = document.querySelector('.text__description');
+const hashtagsInputElement = formElement.querySelector('.text__hashtags');
 
 const pristine = new Pristine(formElement, {
-  classTo: 'img-upload__filed-wrapper',
-  errorTextParent: 'img-upload__filed-wrapper',
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
 });
 
-// проверяем валидность
+const validateDescriptionField = (value) => {
+  return value.length <= 140
+}
 const onSubmit = (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
@@ -19,7 +22,7 @@ const onSubmit = (evt) => {
 const normalizeTags = (value) => value
   .trim()
   .split(' ')
-  //фидьтруем массив, убираем пробелы
+  //фильтруем массив, убираем пробелы
   .filter((tag) => Boolean(tag.length));
 
 const validateUniqueHashtags = (value) => {
@@ -40,23 +43,30 @@ const validateHashtagsNumber = (value) => {
   const hashtags = normalizeTags(value);
   return hashtags.length <= HASHTAGS_MAX_NUMBER;
 };
+const initValidator = () => {
+  pristine.addValidator(
+    hashtagsInputElement,
+    validateRegexpHashtags,
+    'введён невалидный хэш-тег'
+  );
 
-pristine.addValidator(
-  hashtagsInputElement,
-  validateRegexpHashtags,
-  'введён невалидный хэш-тег'
-);
+  pristine.addValidator(
+    hashtagsInputElement,
+    validateUniqueHashtags,
+    'хэш-теги повторяются'
+  );
 
-pristine.addValidator(
-  hashtagsInputElement,
-  validateUniqueHashtags,
-  'хэш-теги повторяются'
-);
+  pristine.addValidator(
+    hashtagsInputElement,
+    validateHashtagsNumber,
+    'превышено количество хэш-тегов'
+  );
 
-pristine.addValidator(
-  hashtagsInputElement,
-  validateHashtagsNumber,
-  'превышено количество хэш-тегов'
-);
+  pristine.addValidator(
+    descriptionFieldElement,
+    validateDescriptionField,
+    'длина комментария не может составлять больше 140 символов'
+  );
+}
 
-export { onSubmit };
+export { initValidator, onSubmit };

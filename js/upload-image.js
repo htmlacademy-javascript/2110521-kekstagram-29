@@ -1,4 +1,4 @@
-import { onSubmit } from'./form-validation.js';
+import { initValidator, onSubmit } from'./form-validation.js';
 import { createSlider, onPictureEffect, destroySlider } from './photo-effects.js';
 
 const SCALE_SIZES = {
@@ -21,7 +21,7 @@ const imgUploadPreviewImgElement = document.querySelector('.img-upload__preview 
 const formElement = document.querySelector('#upload-select-image');
 const effectsListElement = document.querySelector('.effects__list');
 
-// на ретро сказали такого подключения будет достаточно, но еслинт ругается
+// на ретро сказали такого подключения будет достаточно, но валидация не работает.
 const pristine = new Pristine (form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
@@ -41,6 +41,7 @@ const onModalCloseEscape = (evt) => {
 const scaleImg = () => {
   imgUploadPreviewImgElement.style.transform = `scale(${currentScale / SCALE_SIZES.max})`;
   // на странице не отображается значениче инпута?
+  console.log(scaleControlValueElement)
   scaleControlValueElement.value = `${currentScale}%`;
 };
 
@@ -113,3 +114,4 @@ function closeModal() {
 }
 
 uploadImg();
+initValidator();
