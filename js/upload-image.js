@@ -1,4 +1,5 @@
-//import './form-validation.js';
+import { onSubmit } from'./form-validation.js';
+import { createSlider, onPictureEffect, destroySlider } from './photo-effects.js';
 
 const SCALE_SIZES = {
   step: 25,
@@ -17,12 +18,13 @@ const scaleControlValueElement = document.querySelector('.scale__control--value'
 const textHashtagsElement = document.querySelector('.text__hashtags');
 const textDescriptionElement = document.querySelector('.text__description');
 const imgUploadPreviewImgElement = document.querySelector('.img-upload__preview img');
-//const formElement = document.querySelector('#upload-select-image');
+const formElement = document.querySelector('#upload-select-image');
+const effectsListElement = document.querySelector('.effects__list');
 
-/* const pristine = new Pristine (form, {
+const pristine = new Pristine (form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
-}); */
+});
 
 const onModalCloseClick = () => {
   closeModal();
@@ -71,9 +73,10 @@ const addModalEventListeneres = () => {
   document.addEventListener('keydown', onModalCloseEscape);
   scaleControlPlusElement.addEventListener('click', onPictureIncrease);
   scaleControlMinusElement.addEventListener('click', onPictureDecrease);
-  //formElement.addEventListener('submit', onSubmit);
   textHashtagsElement.addEventListener('keydown', onInputKeydown);
   textDescriptionElement.addEventListener('keydown', onInputKeydown);
+  formElement.addEventListener('submit', onSubmit);
+  effectsListElement.addEventListener('click', onPictureEffect);
 };
 
 const removeModalEventListeneres = () => {
@@ -81,9 +84,10 @@ const removeModalEventListeneres = () => {
   document.removeEventListener('keydown', onModalCloseEscape);
   scaleControlPlusElement.removeEventListener('click', onPictureIncrease);
   scaleControlMinusElement.removeEventListener('click', onPictureDecrease);
-  //formElement.removeEventListener('submit', onSubmit);
   textHashtagsElement.removeEventListener('keydown', onInputKeydown);
   textDescriptionElement.removeEventListener('keydown', onInputKeydown);
+  formElement.removeEventListener('submit', onSubmit);
+  effectsListElement.removeEventListener('click', onPictureEffect);
 };
 
 const onFileChange = () => {
@@ -91,6 +95,7 @@ const onFileChange = () => {
   document.body.classList.add('modal-open');
   resetImgScale();
   addModalEventListeneres();
+  createSlider();
 };
 
 const uploadImg = () => {
@@ -103,6 +108,7 @@ function closeModal() {
   textHashtagsElement.value = '';
   textDescriptionElement.value = '';
   removeModalEventListeneres();
+  destroySlider();
 }
 
 uploadImg();

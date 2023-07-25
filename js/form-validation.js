@@ -1,5 +1,5 @@
 const HASHTAGS_MAX_NUMBER = 5;
-const formElement = documnet.querySelector('#upload-select-image');
+const formElement = document.querySelector('#upload-select-image');
 const hashtagsInputElement = formElement.querySelector('text__hashtags');
 
 const pristine = new Pristine(formElement, {
@@ -37,7 +37,7 @@ const validateRegexpHashtags = (value) => {
 
 const validateHashtagsNumber = (value) => {
   const hashtags = normalizeTags(value);
-  return hashtags.length <=   HASHTAGS_MAX_NUMBER;
+  return hashtags.length <= HASHTAGS_MAX_NUMBER;
 };
 
 pristine.addValidator(
@@ -57,3 +57,5 @@ pristine.addValidator(
   validateHashtagsNumber,
   'превышено количество хэш-тегов'
 );
+
+export { onSubmit };
