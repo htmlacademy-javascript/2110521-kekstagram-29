@@ -63,15 +63,15 @@ const createRandomIdGenerator = (min, max) => {
 const generateUrlId = createRandomIdGenerator(1, 25);
 const generateCommentId = createRandomIdGenerator(1,1000);
 const createIdGenerator = () => {
-  let lastGeneratedId = 0
+  let lastGeneratedId = 0;
 
   return () => {
     lastGeneratedId += 1;
-    return lastGeneratedId
+    return lastGeneratedId;
   };
 };
 
-let idCounter = createIdGenerator();
+const idCounter = createIdGenerator();
 
 //Генерируем коммент
 const createComment = () => ({
