@@ -22,7 +22,6 @@ const onSubmit = (evt) => {
 const normalizeTags = (value) => value
   .trim()
   .split(' ')
-  //фильтруем массив, убираем пробелы
   .filter((tag) => Boolean(tag.length));
 
 const validateUniqueHashtags = (value) => {
