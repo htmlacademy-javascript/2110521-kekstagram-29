@@ -21,12 +21,6 @@ const imgUploadPreviewImgElement = document.querySelector('.img-upload__preview 
 const formElement = document.querySelector('#upload-select-image');
 const effectsListElement = document.querySelector('.effects__list');
 
-// на ретро сказали такого подключения будет достаточно, но валидация не работает.
-const pristine = new Pristine (form, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-});
-
 const onModalCloseClick = () => {
   closeModal();
 };
