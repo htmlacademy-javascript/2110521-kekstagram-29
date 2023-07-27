@@ -1,4 +1,5 @@
 import { onError } from './form-validation.js';
+import { onModalOpenClick } from './full-screen-pic.js';
 
 const picturesContainerElement = document.querySelector('.pictures');
 const templatePicture = document.querySelector('#picture').content.querySelector('.picture');
@@ -23,7 +24,7 @@ const renderThumbnails = (pictures) => {
   });
 
   picturesContainerElement.appendChild(fragment);
-  //picturesContainerElement.addEventListener('click', (evt) => onModalOpenClick(evt, pictures));
+  picturesContainerElement.addEventListener('click', (evt) => onModalOpenClick(evt, pictures));
 };
 
 const onThumbnailsLoaded = (response) => {

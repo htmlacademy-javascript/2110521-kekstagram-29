@@ -1,110 +1,113 @@
-import {similarPhotos} from './miniature.js';
+const SHOW_COMMENTS = 5;
+let shownComments = 0;
+let comments;
 
-//Контейнер с чужими изображениями
-const otherPicContainer = document.querySelector('.pictures');
-//Контейнер полноэкранного показа изображения
-const fullPictureContainer = document.querySelector('.big-picture');
-//Полноэкранное изображение
-const fullSizePic = document.querySelector('.big-picture__img img');
-//Количество лайков на изображении
-const likeCount = document.querySelector('.likes-count');
-//Контейнер с количеством комментариев на изображении
-const commentCount = fullPictureContainer.querySelector('.social__comment-count');
-//Количество комментариев на изображении
-const commentsCount = commentCount.querySelector('.comments-count');
-//Подпись к изображению
-const photoDescription = document.querySelector('.social__caption');
-//Кнопка закрытия полноэкранного отображения
-const fullPicCancel = fullPictureContainer.querySelector('.big-picture__cancel');
-//Кнопка загрузить ещё комментарии
-const commentsLoader = fullPictureContainer.querySelector('.comments-loader');
-//Контейнер с самими комментариями
-const commentsList = fullPictureContainer.querySelector('.social__comments');
-//Контейнер одного комментария
-const commentTemplate = commentsList.querySelector('.social__comment');
-//В переменной хранится массив ещё неотрисованных комментариев выбранной полноразмерной фотографии
-let partCommentsArray;
+const bigPictureElement = document.querySelector('.big-picture');
+const closeBtnElement = document.querySelector('.big-picture__cancel');
+const templateCommentElement = document.querySelector('#comment').content;
+const bigPictureImgElement = document.querySelector('.big-picture__img img');
+const bigPictureLikesElement = document.querySelector('.likes-count');
+const bigPictureCommentsNumberElement = document.querySelector('.comments-count');
+const bigPictureDescriptionElement = document.querySelector('.social__caption');
+const bigPictureCommentsElement = document.querySelector('.social__comments');
+const allCommentsNumberElement = document.querySelector('.social__comment-count');
+const commentLoaderBtnElement = document.querySelector('.comments-loader');
 
-//Добавляю слушатель на контейнер с делегированием
-otherPicContainer.addEventListener('click', onPicClick);
+const createComment = ({avatar, message, name}) => {
+  const comment = templateCommentElement.cloneNode(true);
 
-// Функция для проверки нажатой ESC и последующего закрытия окна
-const onDocumentKeydown = (evt) => {
+  comment.querySelector('.social__comment img').setAttribute('src', avatar);
+  comment.querySelector('.social__comment img').setAttribute('alt', name);
+  comment.querySelector('.social__text').textContent = message;
+
+  return comment;
+};
+
+const onRenderCommentsClick = () => {
+  const fragment = document.createDocumentFragment();
+  const lastIndex = shownComments + SHOW_COMMENTS;
+  const slicedArr = comments.slice(shownComments, lastIndex);
+  shownComments = comments.slice(0, lastIndex).length;
+  slicedArr.forEach((elem) => {
+    const comment = createComment(elem);
+    fragment.append(comment);
+  });
+  bigPictureCommentsElement.append(fragment);
+  allCommentsNumberElement.innerHTML = `${shownComments} из <span class="comment-count">${comments.length}</span> комментариев`;
+
+  if (shownComments === comments.length) {
+    commentLoaderBtnElement.classList.add('hidden');
+  }
+};
+
+const getComments = (pictures, currentThumbnail) => {
+  const thumbnailId = currentThumbnail.getAttribute('data-id');
+  return pictures.find((element) => element.id === Number(thumbnailId)).comments;
+};
+
+const initComments = (currentThumbnail) => {
+  const thumbnailCommentsNumber = currentThumbnail.querySelector('.picture__comments');
+  bigPictureCommentsNumberElement.textContent = thumbnailCommentsNumber.textContent;
+  bigPictureCommentsElement.textContent = '';
+
+  commentLoaderBtnElement.classList.remove('hidden');
+  shownComments = 0;
+
+  onRenderCommentsClick();
+};
+
+const processThumbnail = (currentThumbnail) => {
+  const thumbnailLikes = currentThumbnail.querySelector('.picture__likes');
+  const thumbnailDescription = currentThumbnail.querySelector('.picture__info');
+  bigPictureImgElement.src = currentThumbnail.querySelector('.picture__img').src;
+  bigPictureDescriptionElement.textContent = thumbnailDescription.getAttribute('alt');
+  bigPictureLikesElement.textContent = thumbnailLikes.textContent;
+};
+
+const onModalCloseClick = () => {
+  closeModal();
+};
+
+const onModalCloseEscape = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    closeUserModal();
+    closeModal();
   }
 };
 
-// Функция для закрытия окна по крестику
-const onFullPicCancel = () => {
-  closeUserModal();
+const initModalEventListeneres = () => {
+  document.addEventListener('keydown', onModalCloseEscape);
+  commentLoaderBtnElement.addEventListener('click', onRenderCommentsClick);
+  closeBtnElement.addEventListener('click', onModalCloseClick);
 };
 
-// Функция открытия окна
-function openUserModal () {
-  commentsLoader.addEventListener ('click', (onFiveComments));
-  fullPictureContainer.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  document.addEventListener('keydown', onDocumentKeydown);
-  fullPicCancel.addEventListener('click', onFullPicCancel);
-  otherPicContainer.removeEventListener('click', onPicClick);
-}
+const removeModalEventListeneres = () => {
+  document.removeEventListener('keydown', onModalCloseEscape);
+  commentLoaderBtnElement.removeEventListener('click', onRenderCommentsClick);
+  closeBtnElement.removeEventListener('click', onModalCloseClick);
+};
 
-// Функция закрытия окна
-function closeUserModal () {
-  fullPictureContainer.classList.add('hidden');
+function closeModal() {
   document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentKeydown);
-  fullPicCancel.removeEventListener('click', onFullPicCancel);
-  commentsLoader.removeEventListener('click', (onFiveComments));
-  otherPicContainer.addEventListener('click', onPicClick);
+  bigPictureElement.classList.add('hidden');
+
+  removeModalEventListeneres();
 }
 
-//Функция по отрисовке полноразмерного окна
-function onPicClick (evt) {
+const onModalOpenClick = (evt, pictures) => {
   if (evt.target.closest('.picture')) {
-    const clickPicture = evt.target.closest('.picture');
-    //Отрисовываю выбранное изображение и сопутствующую информацию
-    fullSizePic.src = clickPicture.querySelector('.picture__img').src;
-    likeCount.textContent = clickPicture.querySelector('.picture__likes').textContent;
-    commentsCount.textContent = clickPicture.querySelector('.picture__comments').textContent;
-    photoDescription.textContent = clickPicture.querySelector('.picture__img').alt;
-    commentsList.innerHTML = '';
-    partCommentsArray = similarPhotos.find((element) => element.id === +clickPicture.dataset.id).comments.slice(0);
-    onFiveComments(partCommentsArray);
-    openUserModal();
-  }
-}
+    evt.preventDefault();
+    bigPictureElement.classList.remove('hidden');
+    document.body.classList.add('modal-open');
 
-//Функция по добавлению 5 первых комментариев из массива комментариев (используется копия оригинального)
-function onFiveComments () {
-  const addComments = partCommentsArray.splice(0, 5);
-  addComments.forEach((comment) => {
-    const commentElement = commentTemplate.cloneNode(true);
-    commentElement.querySelector('.social__picture').src = comment.avatar;
-    commentElement.querySelector('.social__picture').alt = comment.name;
-    commentElement.querySelector('.social__text').textContent = comment.message;
-    commentsList.appendChild(commentElement);
-  });
-  hideCommentLoader();
-  updateCommentCount();
-}
+    const currentThumbnail = evt.target.closest('.picture');
+    comments = getComments(pictures, currentThumbnail);
 
-//Обновление строки с количеством комментариев + исправление поведения при изначальном 0 комментариев
-function updateCommentCount () {
-  if (+commentsCount.textContent > 0) {
-    commentCount.innerHTML = `${commentsList.querySelectorAll('.social__comment').length} из ${commentsCount.textContent} комментариев`;
-  } else {
-    commentCount.innerHTML = '0 из 0 комментариев';
-  }
-}
+    processThumbnail(currentThumbnail);
+    initComments(currentThumbnail);
 
-//Убираю/добавляю кнопку загрузить ещё, если комментарии кончились
-function hideCommentLoader () {
-  if (partCommentsArray.length === 0) {
-    commentsLoader.classList.add('hidden');
-  } else {
-    commentsLoader.classList.remove('hidden');
+    initModalEventListeneres();
   }
-}
+};
+
+export { onModalOpenClick };
