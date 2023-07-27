@@ -1,4 +1,4 @@
-import { initValidator, onSubmit } from'./form-validation.js';
+import { onSubmit, onMessageClose } from'./form-validation.js';
 import { createSlider, onPictureEffect, destroySlider } from './photo-effects.js';
 
 const SCALE_SIZES = {
@@ -21,12 +21,6 @@ const imgUploadPreviewImgElement = document.querySelector('.img-upload__preview 
 const formElement = document.querySelector('#upload-select-image');
 const effectsListElement = document.querySelector('.effects__list');
 
-// на ретро сказали такого подключения будет достаточно, но валидация не работает.
-const pristine = new Pristine (form, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-});
-
 const onModalCloseClick = () => {
   closeModal();
 };
@@ -34,7 +28,12 @@ const onModalCloseClick = () => {
 const onModalCloseEscape = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    closeModal();
+    const modalMessage = document.querySelector('.success') || document.querySelector('.error');
+    if (modalMessage) {
+      onMessageClose(modalMessage);
+    } else {
+      closeModal();
+    }
   }
 };
 
@@ -113,5 +112,4 @@ function closeModal() {
   destroySlider();
 }
 
-uploadImg();
-initValidator();
+export { uploadImg, closeModal }
