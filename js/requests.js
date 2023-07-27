@@ -16,10 +16,10 @@ const sendFormData = (formElement, onSuccess, onError) => {
       method: 'POST',
       body: formData,
     }
-    )
+  )
     .then(checkResponse)
     .then(onSuccess)
-    .then(() => onError());
+    .catch(() => onError());
 };
 
 const getData = (onSuccess, onError) => {
