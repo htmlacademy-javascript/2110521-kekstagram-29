@@ -1,21 +1,37 @@
-import {generatePhoto} from './create-photo.js';
+import { onError } from './form-validation.js';
 
-const sectionOtherUSers = document.querySelector('.pictures');
-const similarPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const picturesContainerElement = document.querySelector('.pictures');
+const templatePicture = document.querySelector('#picture').content.querySelector('.picture');
 
-const similarPhotos = generatePhoto();
-const similarPhotoFragment = document.createDocumentFragment();
+const createThumbnail = ({ id, url, comments, likes, description }) => {
+  const thumbnail = templatePicture.cloneNode(true);
 
-similarPhotos.forEach(({url, comments, id, likes, description}) => {
-  const photoElement = similarPhotoTemplate.cloneNode(true);
-  photoElement.querySelector('.picture__img').src = url;
-  photoElement.querySelector('.picture__comments').textContent = comments.length;
-  photoElement.querySelector('.picture__likes').textContent = likes;
-  photoElement.querySelector('.picture__img').alt = description;
-  photoElement.dataset.id = id;
-  similarPhotoFragment.appendChild(photoElement);
-});
+  thumbnail.setAttribute('data-id', id);
+  thumbnail.querySelector('.picture__img').setAttribute('src', url);
+  thumbnail.querySelector('.picture__info').setAttribute('alt', description);
+  thumbnail.querySelector('.picture__likes').textContent = likes;
+  thumbnail.querySelector('.picture__comments').textContent = comments.length;
 
-sectionOtherUSers.appendChild(similarPhotoFragment);
+  return thumbnail;
+};
 
-export {similarPhotos};
+const renderThumbnails = (pictures) => {
+  const fragment = document.createDocumentFragment();
+  pictures.forEach((picture) => {
+    const thumbnail = createThumbnail(picture);
+    fragment.append(thumbnail);
+  });
+
+  picturesContainerElement.appendChild(fragment);
+  //picturesContainerElement.addEventListener('click', (evt) => onModalOpenClick(evt, pictures));
+};
+
+const onThumbnailsLoaded = (response) => {
+  renderThumbnails(response);
+};
+
+const onThumbnailsLoadedError = () => {
+  onError('Упс, что-то пошло не так.');
+};
+
+export { onThumbnailsLoaded, onThumbnailsLoadedError };
