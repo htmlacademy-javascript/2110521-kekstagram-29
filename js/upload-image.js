@@ -6,9 +6,9 @@ const SCALE_SIZES = {
   max: 100,
   min: 25,
 };
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 let currentScale = SCALE_SIZES.max;
 
-const form = document.querySelector('.img-upload__form');
 const imgUploadInputElement = document.querySelector('#upload-file');
 const imgUploadOverlayElement = document.querySelector('.img-upload__overlay');
 const imgUploadCloseElement = document.querySelector('.img-upload__cancel');
@@ -39,8 +39,6 @@ const onModalCloseEscape = (evt) => {
 
 const scaleImg = () => {
   imgUploadPreviewImgElement.style.transform = `scale(${currentScale / SCALE_SIZES.max})`;
-  // на странице не отображается значениче инпута?
-  console.log(scaleControlValueElement)
   scaleControlValueElement.value = `${currentScale}%`;
 };
 
@@ -94,6 +92,17 @@ const removeModalEventListeneres = () => {
 const onFileChange = () => {
   imgUploadOverlayElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
+  const file = imgUploadInputElement.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    const uploadedFile = URL.createObjectURL(file);
+    imgUploadPreviewImgElement.src = uploadedFile;
+    document.querySelectorAll('.effects__preview').forEach((element) => {
+      element.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+    });
+  }
+
   resetImgScale();
   addModalEventListeneres();
   createSlider();
@@ -108,6 +117,7 @@ function closeModal() {
   document.body.classList.remove('modal-open');
   textHashtagsElement.value = '';
   textDescriptionElement.value = '';
+  scaleControlValueElement.value = '100%';
   removeModalEventListeneres();
   destroySlider();
 }
