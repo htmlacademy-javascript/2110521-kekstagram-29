@@ -33,7 +33,7 @@ const onRenderCommentsClick = () => {
     fragment.append(comment);
   });
   bigPictureCommentsElement.append(fragment);
-  allCommentsNumberElement.innerHTML = `${shownComments} из <span class="comment-count">${comments.length}</span> комментариев`;
+  allCommentsNumberElement.innerHTML = `${shownComments} из <span class="comments-count">${comments.length}</span> комментариев`;
 
   if (shownComments === comments.length) {
     commentLoaderBtnElement.classList.add('hidden');
@@ -59,7 +59,7 @@ const initComments = (currentThumbnail) => {
 const processThumbnail = (currentThumbnail) => {
   const thumbnailLikes = currentThumbnail.querySelector('.picture__likes');
   const thumbnailDescription = currentThumbnail.querySelector('.picture__info');
-  bigPictureImgElement.src = currentThumbnail.querySelector('.picture__img').src;
+  bigPictureImgElement.src = currentThumbnail.querySelector('.picture__img').getAttribute('src');
   bigPictureDescriptionElement.textContent = thumbnailDescription.getAttribute('alt');
   bigPictureLikesElement.textContent = thumbnailLikes.textContent;
 };

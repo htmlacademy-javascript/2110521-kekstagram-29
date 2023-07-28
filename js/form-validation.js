@@ -5,15 +5,21 @@ const HASHTAGS_MAX_NUMBER = 5;
 const formElement = document.querySelector('#upload-select-image');
 const descriptionFieldElement = document.querySelector('.text__description');
 const hashtagsInputElement = formElement.querySelector('.text__hashtags');
+const submitButtonElement = formElement.querySelector('#upload-submit');
+const MessageStatuses = {
+  SUCCESS: 'success',
+  ERROR: 'error',
+};
+let messageElement;
 
 const pristine = new Pristine(formElement, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
 });
 
-const onMessageClose = (modalMessage) => {
-  modalMessage.remove();
-}
+const clearFormValidation = () => {
+  pristine.reset();
+};
 
 const onOutsideMessageClick = (evt) => {
   if (evt.target.classList.contains('success') || evt.target.classList.contains('error')) {
@@ -21,43 +27,66 @@ const onOutsideMessageClick = (evt) => {
   }
 };
 
-const onSuccess = () => {
-  const successModalElement = document.querySelector('#success').content;
-  const successMessage = successModalElement.cloneNode(true);
-  const successMessageModalElement = successMessage.querySelector('.success');
-  const successButtonElement = successMessageModalElement.querySelector('.success__button');
-  document.body.append(successMessage);
-  successButtonElement.addEventListener('click', () => onMessageClose(successMessageModalElement));
-  successMessageModalElement.addEventListener('click', onOutsideMessageClick);
-  closeModal();
-}
+const onModalCloseEscape = (evt) => {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    const modalMessage = document.querySelector('.success');
+    if (modalMessage) {
+      onMessageClose(modalMessage);
+    }
+  }
+};
 
-const onError = (text = null) => {
-  const errorModalElement = document.querySelector('#error').content;
-  const errorMessage = errorModalElement.cloneNode(true);
-  const errorMessageModalElement = errorMessage.querySelector('.error');
-  const errorButtonElement = errorMessageModalElement.querySelector('.error__button');
+const showMessage = (element, text = null) => {
+  messageElement = element;
+  const modalElement = document.querySelector(`#${element}`).content;
+  const message = modalElement.cloneNode(true);
+  const messageModalElement = message.querySelector(`.${element}`);
+  const buttonElement = messageModalElement.querySelector(`.${element}__button`);
   if (text) {
-    const errorTitleElement = errorMessageModalElement.querySelector('.error__title');
+    const errorTitleElement = messageModalElement.querySelector(`.${element}__title`);
     errorTitleElement.textContent = text;
   }
-  document.body.append(errorMessage);
-  errorButtonElement.addEventListener('click', () => onMessageClose(errorMessageModalElement));
-  errorMessageModalElement.addEventListener('click', onOutsideMessageClick);
+  document.body.append(message);
+  buttonElement.addEventListener('click', onMessageClose);
+  messageModalElement.addEventListener('click', onOutsideMessageClick);
+  submitButtonElement.disabled = false;
+};
+
+const onSuccess = () => {
+  showMessage(MessageStatuses.SUCCESS);
+  closeModal();
+  document.addEventListener('keydown', onModalCloseEscape);
+};
+
+const onError = (text = null) => {
+  showMessage(MessageStatuses.ERROR, text);
+};
+
+function onMessageClose() {
+  const messageModalElement = document.querySelector(`.${messageElement}`);
+  const buttonElement = messageModalElement.querySelector(`.${messageElement}__button`);
+
+  messageModalElement.remove();
+  document.removeEventListener('keydown', onModalCloseEscape);
+  buttonElement.removeEventListener('click', onMessageClose);
+  messageModalElement.removeEventListener('click', onOutsideMessageClick);
+}
+
+const onSubmit = (evt) => {
+  evt.preventDefault();
+
+  const isValid = pristine.validate();
+  if (isValid) {
+    submitButtonElement.disabled = true;
+    sendFormData(evt.target, onSuccess, onError);
+  }
 };
 
 // валидация описания
 const validateDescriptionField = (value) => {
   return value.length <= 140
 }
-
-const onSubmit = (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    sendFormData(evt.target, onSuccess, onError);
-  }
-};
 
 const normalizeTags = (value) => value
   .trim()
@@ -108,4 +137,4 @@ const initValidator = () => {
   );
 }
 
-export { initValidator, onSubmit, onMessageClose, onError };
+export { initValidator, onSubmit, onMessageClose, onError, clearFormValidation };

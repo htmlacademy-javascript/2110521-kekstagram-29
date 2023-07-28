@@ -1,17 +1,19 @@
-import { onSubmit, onMessageClose } from'./form-validation.js';
+import { onSubmit, onMessageClose, clearFormValidation } from'./form-validation.js';
 import { createSlider, onPictureEffect, destroySlider } from './photo-effects.js';
 
-const SCALE_SIZES = {
+
+const SizeOptions = {
   step: 25,
   max: 100,
   min: 25,
 };
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
-let currentScale = SCALE_SIZES.max;
+let currentScale = SizeOptions.max;
 
-const imgUploadInputElement = document.querySelector('#upload-file');
-const imgUploadOverlayElement = document.querySelector('.img-upload__overlay');
-const imgUploadCloseElement = document.querySelector('.img-upload__cancel');
+
+const uploadImageInputElement = document.querySelector('#upload-file');
+const uploadImageOverlayElement = document.querySelector('.img-upload__overlay');
+const uploadImageCloseElement = document.querySelector('.img-upload__cancel');
 const scaleControlMinusElement = document.querySelector('.scale__control--smaller');
 const scaleControlPlusElement = document.querySelector('.scale__control--bigger');
 const scaleControlValueElement = document.querySelector('.scale__control--value');
@@ -38,25 +40,25 @@ const onModalCloseEscape = (evt) => {
 };
 
 const scaleImg = () => {
-  imgUploadPreviewImgElement.style.transform = `scale(${currentScale / SCALE_SIZES.max})`;
+  imgUploadPreviewImgElement.style.transform = `scale(${currentScale / SizeOptions.max})`;
   scaleControlValueElement.value = `${currentScale}%`;
 };
 
 const resetImgScale = () => {
-  currentScale = SCALE_SIZES.max;
+  currentScale = SizeOptions.max;
   scaleImg();
 };
 
 const onPictureIncrease = () => {
-  if (currentScale < SCALE_SIZES.max) {
-    currentScale += SCALE_SIZES.step;
+  if (currentScale < SizeOptions.max) {
+    currentScale += SizeOptions.step;
     scaleImg();
   }
 };
 
 const onPictureDecrease = () => {
-  if (currentScale > SCALE_SIZES.min) {
-    currentScale -= SCALE_SIZES.step;
+  if (currentScale > SizeOptions.min) {
+    currentScale -= SizeOptions.step;
     scaleImg();
   }
 };
@@ -68,7 +70,7 @@ const onInputKeydown = (evt) => {
 };
 
 const addModalEventListeneres = () => {
-  imgUploadCloseElement.addEventListener('click', onModalCloseClick);
+  uploadImageCloseElement.addEventListener('click', onModalCloseClick);
   document.addEventListener('keydown', onModalCloseEscape);
   scaleControlPlusElement.addEventListener('click', onPictureIncrease);
   scaleControlMinusElement.addEventListener('click', onPictureDecrease);
@@ -79,7 +81,7 @@ const addModalEventListeneres = () => {
 };
 
 const removeModalEventListeneres = () => {
-  imgUploadCloseElement.removeEventListener('click', onModalCloseClick);
+  uploadImageCloseElement.removeEventListener('click', onModalCloseClick);
   document.removeEventListener('keydown', onModalCloseEscape);
   scaleControlPlusElement.removeEventListener('click', onPictureIncrease);
   scaleControlMinusElement.removeEventListener('click', onPictureDecrease);
@@ -90,9 +92,9 @@ const removeModalEventListeneres = () => {
 };
 
 const onFileChange = () => {
-  imgUploadOverlayElement.classList.remove('hidden');
+  uploadImageOverlayElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  const file = imgUploadInputElement.files[0];
+  const file = uploadImageInputElement.files[0];
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
   if (matches) {
@@ -109,15 +111,17 @@ const onFileChange = () => {
 };
 
 const uploadImg = () => {
-  imgUploadInputElement.addEventListener('change', onFileChange);
+  uploadImageInputElement.addEventListener('change', onFileChange);
 };
 
 function closeModal() {
-  imgUploadOverlayElement.classList.add('hidden');
+  uploadImageOverlayElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
   textHashtagsElement.value = '';
   textDescriptionElement.value = '';
   scaleControlValueElement.value = '100%';
+
+  clearFormValidation();
   removeModalEventListeneres();
   destroySlider();
 }
