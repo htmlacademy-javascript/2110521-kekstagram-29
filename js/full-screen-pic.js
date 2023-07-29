@@ -45,6 +45,8 @@ const getComments = (pictures, currentThumbnail) => {
   return pictures.find((element) => element.id === Number(thumbnailId)).comments;
 };
 
+
+//выполняет инициализацию отображения комментариев для большой картинки.
 const initComments = (currentThumbnail) => {
   const thumbnailCommentsNumber = currentThumbnail.querySelector('.picture__comments');
   bigPictureCommentsNumberElement.textContent = thumbnailCommentsNumber.textContent;
@@ -105,7 +107,6 @@ const onModalOpenClick = (evt, pictures) => {
 
     processThumbnail(currentThumbnail);
     initComments(currentThumbnail);
-
     initModalEventListeneres();
   }
 };

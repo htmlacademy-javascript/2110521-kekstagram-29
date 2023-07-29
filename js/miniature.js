@@ -20,6 +20,7 @@ const createThumbnail = ({ id, url, comments, likes, description }) => {
 };
 
 const renderThumbnails = (pictures) => {
+  //удаляет все существующие элементы с классом .picture
   document.querySelectorAll('.picture').forEach((element) => element.remove());
   const fragment = document.createDocumentFragment();
 

@@ -53,12 +53,14 @@ const showMessage = (element, text = null) => {
   submitButtonElement.disabled = false;
 };
 
+
 const onSuccess = () => {
   showMessage(MessageStatuses.SUCCESS);
   closeModal();
   document.addEventListener('keydown', onModalCloseEscape);
 };
 
+// Отоброжаем сообщение об ошибке
 const onError = (text = null) => {
   showMessage(MessageStatuses.ERROR, text);
 };
@@ -73,6 +75,7 @@ function onMessageClose() {
   messageModalElement.removeEventListener('click', onOutsideMessageClick);
 }
 
+//отправляем форму отключаем кнопку
 const onSubmit = (evt) => {
   evt.preventDefault();
 
