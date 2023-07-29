@@ -53,7 +53,7 @@ const onSliderValueUpdate = () => {
     const sliderValue = sliderElement.noUiSlider.get();
     // как работает computedStyleMap
     imgUploadPreviewImgElement.style.filter = `${effect.filter}(${sliderValue}${effect.measure})`;
-    effectLevelValueElement.value = parseFloat(sliderValue).toFixed(2);
+    effectLevelValueElement.setAttribute('value', parseFloat(sliderValue).toFixed(2));
   }
 };
 
@@ -69,7 +69,6 @@ const createSlider = () => {
   });
 
   imgUploadEffectLevelElement.classList.add('hidden');
-  //устанавливается обработчик события 'update' для слайдера
   sliderElement.noUiSlider.on('update', onSliderValueUpdate);
   imgUploadPreviewImgElement.style.filter = 'none';
 };
