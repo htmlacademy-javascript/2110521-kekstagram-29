@@ -87,9 +87,8 @@ const onSubmit = (evt) => {
 };
 
 // валидация описания
-const validateDescriptionField = (value) => {
-  return value.length <= 140
-}
+const validateDescriptionField = (value) => value.length <= 140;
+
 
 const normalizeTags = (value) => value
   .trim()
@@ -138,6 +137,6 @@ const initValidator = () => {
     validateDescriptionField,
     'длина комментария не может составлять больше 140 символов'
   );
-}
+};
 
 export { initValidator, onSubmit, onMessageClose, onError, clearFormValidation };
