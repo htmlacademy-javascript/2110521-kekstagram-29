@@ -1,7 +1,6 @@
 import { onSubmit, onMessageClose, clearFormValidation } from'./form-validation.js';
 import { createSlider, onPictureEffect, destroySlider } from './photo-effects.js';
 
-
 const SizeOptions = {
   step: 25,
   max: 100,
@@ -9,7 +8,6 @@ const SizeOptions = {
 };
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 let currentScale = SizeOptions.max;
-
 
 const uploadImageInputElement = document.querySelector('#upload-file');
 const uploadImageOverlayElement = document.querySelector('.img-upload__overlay');
@@ -105,6 +103,7 @@ const onFileChange = () => {
     });
   }
 
+
   resetImgScale();
   addModalEventListeneres();
   createSlider();
@@ -121,6 +120,9 @@ function closeModal() {
   textDescriptionElement.value = '';
   scaleControlValueElement.value = '100%';
 
+  console.log('cleared');
+
+  uploadImageInputElement.value = '';
   clearFormValidation();
   removeModalEventListeneres();
   destroySlider();
