@@ -23,6 +23,7 @@ const getFilteredArray = () => {
   }
 };
 
+// выбор фильтра и отображения изображений на веб-странице на основе выбранного фильтра
 const initializeFilter = (photosArr, callback) => {
   pictures = [...photosArr];
   document.querySelector('.img-filters__form').addEventListener('click', (evt) => {

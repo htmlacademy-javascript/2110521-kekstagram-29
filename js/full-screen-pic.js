@@ -33,7 +33,7 @@ const onRenderCommentsClick = () => {
     fragment.append(comment);
   });
   bigPictureCommentsElement.append(fragment);
-  allCommentsNumberElement.innerHTML = `${shownComments} из <span class="comment-count">${comments.length}</span> комментариев`;
+  allCommentsNumberElement.innerHTML = `${shownComments} из <span class="comments-count">${comments.length}</span> комментариев`;
 
   if (shownComments === comments.length) {
     commentLoaderBtnElement.classList.add('hidden');
@@ -45,6 +45,8 @@ const getComments = (pictures, currentThumbnail) => {
   return pictures.find((element) => element.id === Number(thumbnailId)).comments;
 };
 
+
+//выполняет инициализацию отображения комментариев для большой картинки.
 const initComments = (currentThumbnail) => {
   const thumbnailCommentsNumber = currentThumbnail.querySelector('.picture__comments');
   bigPictureCommentsNumberElement.textContent = thumbnailCommentsNumber.textContent;
@@ -59,7 +61,7 @@ const initComments = (currentThumbnail) => {
 const processThumbnail = (currentThumbnail) => {
   const thumbnailLikes = currentThumbnail.querySelector('.picture__likes');
   const thumbnailDescription = currentThumbnail.querySelector('.picture__info');
-  bigPictureImgElement.src = currentThumbnail.querySelector('.picture__img').src;
+  bigPictureImgElement.src = currentThumbnail.querySelector('.picture__img').getAttribute('src');
   bigPictureDescriptionElement.textContent = thumbnailDescription.getAttribute('alt');
   bigPictureLikesElement.textContent = thumbnailLikes.textContent;
 };
@@ -105,7 +107,6 @@ const onModalOpenClick = (evt, pictures) => {
 
     processThumbnail(currentThumbnail);
     initComments(currentThumbnail);
-
     initModalEventListeneres();
   }
 };
