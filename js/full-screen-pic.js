@@ -47,8 +47,8 @@ const getComments = (pictures, currentThumbnail) => {
 };
 
 const initComments = (currentThumbnail) => {
-  const thumbnailCommentsNumber = currentThumbnail.querySelector('.picture__comments');
-  bigPictureCommentsNumberElement.textContent = thumbnailCommentsNumber.textContent;
+  const thumbnailCommentsNumberElement = currentThumbnail.querySelector('.picture__comments');
+  bigPictureCommentsNumberElement.textContent = thumbnailCommentsNumberElement.textContent;
   bigPictureCommentsElement.textContent = '';
 
   commentLoaderBtnElement.classList.remove('hidden');
@@ -58,11 +58,11 @@ const initComments = (currentThumbnail) => {
 };
 
 const processThumbnail = (currentThumbnail) => {
-  const thumbnailLikes = currentThumbnail.querySelector('.picture__likes');
-  const thumbnailDescription = currentThumbnail.querySelector('.picture__info');
+  const thumbnailLikesElement = currentThumbnail.querySelector('.picture__likes');
+  const thumbnailDescriptionElement = currentThumbnail.querySelector('.picture__info');
   bigPictureImgElement.src = currentThumbnail.querySelector('.picture__img').src;
-  bigPictureDescriptionElement.textContent = thumbnailDescription.getAttribute('alt');
-  bigPictureLikesElement.textContent = thumbnailLikes.textContent;
+  bigPictureDescriptionElement.textContent = thumbnailDescriptionElement.getAttribute('alt');
+  bigPictureLikesElement.textContent = thumbnailLikesElement.textContent;
 };
 
 const onModalCloseClick = () => {

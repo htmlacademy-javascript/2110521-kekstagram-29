@@ -13,7 +13,7 @@ const pristine = new Pristine(formElement, {
 
 const onMessageClose = (modalMessage) => {
   modalMessage.remove();
-}
+};
 
 const onOutsideMessageClick = (evt) => {
   if (evt.target.classList.contains('success') || evt.target.classList.contains('error')) {
@@ -30,7 +30,7 @@ const onSuccess = () => {
   successButtonElement.addEventListener('click', () => onMessageClose(successMessageModalElement));
   successMessageModalElement.addEventListener('click', onOutsideMessageClick);
   closeModal();
-}
+};
 
 const onError = (text = null) => {
   const errorModalElement = document.querySelector('#error').content;
@@ -106,6 +106,6 @@ const initValidator = () => {
     validateDescriptionField,
     'длина комментария не может составлять больше 140 символов'
   );
-}
+};
 
 export { initValidator, onSubmit, onError };

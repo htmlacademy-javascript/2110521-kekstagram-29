@@ -27,7 +27,7 @@ const onModalCloseClick = () => {
 
 const onMessageShutdown = (modalMessage) => {
   modalMessage.remove();
-}
+};
 
 const onModalCloseEscape = (evt) => {
   if (evt.key === 'Escape') {
@@ -126,4 +126,4 @@ function closeModal() {
   destroySlider();
 }
 
-export { uploadImg, closeModal }
+export { uploadImg, closeModal };
