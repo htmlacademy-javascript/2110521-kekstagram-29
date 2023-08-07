@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { onSubmit } from'./form-validation.js';
-=======
-import { onSubmit, onMessageClose, clearFormValidation } from'./form-validation.js';
->>>>>>> 9f9a0932ab08211f0d9c62c3fcf0151edac90cf9
+import { onSubmit, clearFormValidation } from'./form-validation.js';
 import { createSlider, onPictureEffect, destroySlider } from './photo-effects.js';
 
 const SizeOptions = {

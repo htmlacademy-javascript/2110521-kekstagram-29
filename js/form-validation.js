@@ -17,13 +17,8 @@ const pristine = new Pristine(formElement, {
   errorTextParent: 'img-upload__field-wrapper',
 });
 
-<<<<<<< HEAD
-const onMessageClose = (modalMessage) => {
-  modalMessage.remove();
-=======
 const clearFormValidation = () => {
   pristine.reset();
->>>>>>> 9f9a0932ab08211f0d9c62c3fcf0151edac90cf9
 };
 
 const onOutsideMessageClick = (evt) => {
@@ -32,27 +27,6 @@ const onOutsideMessageClick = (evt) => {
   }
 };
 
-<<<<<<< HEAD
-const onSuccess = () => {
-  const successModalElement = document.querySelector('#success').content;
-  const successMessage = successModalElement.cloneNode(true);
-  const successMessageModalElement = successMessage.querySelector('.success');
-  const successButtonElement = successMessageModalElement.querySelector('.success__button');
-  document.body.append(successMessage);
-  successButtonElement.addEventListener('click', () => onMessageClose(successMessageModalElement));
-  successMessageModalElement.addEventListener('click', onOutsideMessageClick);
-  closeModal();
-};
-
-const onError = (text = null) => {
-  const errorModalElement = document.querySelector('#error').content;
-  const errorMessage = errorModalElement.cloneNode(true);
-  const errorMessageModalElement = errorMessage.querySelector('.error');
-  const errorButtonElement = errorMessageModalElement.querySelector('.error__button');
-  if (text) {
-    const errorTitleElement = errorMessageModalElement.querySelector('.error__title');
-    errorTitleElement.textContent = text;
-=======
 const onModalCloseEscape = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
@@ -60,16 +34,9 @@ const onModalCloseEscape = (evt) => {
     if (modalMessage) {
       onMessageClose(modalMessage);
     }
->>>>>>> 9f9a0932ab08211f0d9c62c3fcf0151edac90cf9
   }
 };
 
-<<<<<<< HEAD
-const descriptionMaxLength = 140;
-
-// валидация описания
-const validateDescriptionField = (value) => value.length <= descriptionMaxLength;
-=======
 const showMessage = (element, text = null) => {
   messageElement = element;
   const modalElement = document.querySelector(`#${element}`).content;
@@ -107,7 +74,6 @@ function onMessageClose() {
   buttonElement.removeEventListener('click', onMessageClose);
   messageModalElement.removeEventListener('click', onOutsideMessageClick);
 }
->>>>>>> 9f9a0932ab08211f0d9c62c3fcf0151edac90cf9
 
 //отправляем форму отключаем кнопку
 const onSubmit = (evt) => {
@@ -173,8 +139,4 @@ const initValidator = () => {
   );
 };
 
-<<<<<<< HEAD
-export { initValidator, onSubmit, onError };
-=======
-export { initValidator, onSubmit, onMessageClose, onError, clearFormValidation };
->>>>>>> 9f9a0932ab08211f0d9c62c3fcf0151edac90cf9
+export { initValidator, onSubmit, onError, clearFormValidation };
