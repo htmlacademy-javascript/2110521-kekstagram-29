@@ -5,14 +5,25 @@ const HASHTAGS_MAX_NUMBER = 5;
 const formElement = document.querySelector('#upload-select-image');
 const descriptionFieldElement = document.querySelector('.text__description');
 const hashtagsInputElement = formElement.querySelector('.text__hashtags');
+const submitButtonElement = formElement.querySelector('#upload-submit');
+const MessageStatuses = {
+  SUCCESS: 'success',
+  ERROR: 'error',
+};
+let messageElement;
 
 const pristine = new Pristine(formElement, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
 });
 
+<<<<<<< HEAD
 const onMessageClose = (modalMessage) => {
   modalMessage.remove();
+=======
+const clearFormValidation = () => {
+  pristine.reset();
+>>>>>>> 9f9a0932ab08211f0d9c62c3fcf0151edac90cf9
 };
 
 const onOutsideMessageClick = (evt) => {
@@ -21,6 +32,7 @@ const onOutsideMessageClick = (evt) => {
   }
 };
 
+<<<<<<< HEAD
 const onSuccess = () => {
   const successModalElement = document.querySelector('#success').content;
   const successMessage = successModalElement.cloneNode(true);
@@ -40,24 +52,77 @@ const onError = (text = null) => {
   if (text) {
     const errorTitleElement = errorMessageModalElement.querySelector('.error__title');
     errorTitleElement.textContent = text;
+=======
+const onModalCloseEscape = (evt) => {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    const modalMessage = document.querySelector('.success');
+    if (modalMessage) {
+      onMessageClose(modalMessage);
+    }
+>>>>>>> 9f9a0932ab08211f0d9c62c3fcf0151edac90cf9
   }
-  document.body.append(errorMessage);
-  errorButtonElement.addEventListener('click', () => onMessageClose(errorMessageModalElement));
-  errorMessageModalElement.addEventListener('click', onOutsideMessageClick);
 };
 
+<<<<<<< HEAD
 const descriptionMaxLength = 140;
 
 // валидация описания
 const validateDescriptionField = (value) => value.length <= descriptionMaxLength;
+=======
+const showMessage = (element, text = null) => {
+  messageElement = element;
+  const modalElement = document.querySelector(`#${element}`).content;
+  const message = modalElement.cloneNode(true);
+  const messageModalElement = message.querySelector(`.${element}`);
+  const buttonElement = messageModalElement.querySelector(`.${element}__button`);
+  if (text) {
+    const errorTitleElement = messageModalElement.querySelector(`.${element}__title`);
+    errorTitleElement.textContent = text;
+  }
+  document.body.append(message);
+  buttonElement.addEventListener('click', onMessageClose);
+  messageModalElement.addEventListener('click', onOutsideMessageClick);
+  submitButtonElement.disabled = false;
+};
 
+
+const onSuccess = () => {
+  showMessage(MessageStatuses.SUCCESS);
+  closeModal();
+  document.addEventListener('keydown', onModalCloseEscape);
+};
+
+// Отоброжаем сообщение об ошибке
+const onError = (text = null) => {
+  showMessage(MessageStatuses.ERROR, text);
+};
+
+function onMessageClose() {
+  const messageModalElement = document.querySelector(`.${messageElement}`);
+  const buttonElement = messageModalElement.querySelector(`.${messageElement}__button`);
+
+  messageModalElement.remove();
+  document.removeEventListener('keydown', onModalCloseEscape);
+  buttonElement.removeEventListener('click', onMessageClose);
+  messageModalElement.removeEventListener('click', onOutsideMessageClick);
+}
+>>>>>>> 9f9a0932ab08211f0d9c62c3fcf0151edac90cf9
+
+//отправляем форму отключаем кнопку
 const onSubmit = (evt) => {
   evt.preventDefault();
+
   const isValid = pristine.validate();
   if (isValid) {
+    submitButtonElement.disabled = true;
     sendFormData(evt.target, onSuccess, onError);
   }
 };
+
+// валидация описания
+const validateDescriptionField = (value) => value.length <= 140;
+
 
 const normalizeTags = (value) => value
   .trim()
@@ -108,4 +173,8 @@ const initValidator = () => {
   );
 };
 
+<<<<<<< HEAD
 export { initValidator, onSubmit, onError };
+=======
+export { initValidator, onSubmit, onMessageClose, onError, clearFormValidation };
+>>>>>>> 9f9a0932ab08211f0d9c62c3fcf0151edac90cf9

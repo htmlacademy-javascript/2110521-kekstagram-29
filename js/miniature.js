@@ -3,7 +3,7 @@ import { onModalOpenClick } from './full-screen-pic.js';
 import { initializeFilter } from './filters.js';
 import { debounce } from './utils.js';
 
-const picturesContainerElement = document.querySelector('.pictures');
+const galleryContainerElement = document.querySelector('.pictures');
 const templatePicture = document.querySelector('#picture').content.querySelector('.picture');
 
 const createThumbnail = ({ id, url, comments, likes, description }) => {
@@ -11,6 +11,7 @@ const createThumbnail = ({ id, url, comments, likes, description }) => {
 
   thumbnail.setAttribute('data-id', id);
   thumbnail.querySelector('.picture__img').setAttribute('src', url);
+  thumbnail.querySelector('.picture__img').setAttribute('alt', description);
   thumbnail.querySelector('.picture__info').setAttribute('alt', description);
   thumbnail.querySelector('.picture__likes').textContent = likes;
   thumbnail.querySelector('.picture__comments').textContent = comments.length;
@@ -19,6 +20,7 @@ const createThumbnail = ({ id, url, comments, likes, description }) => {
 };
 
 const renderThumbnails = (pictures) => {
+  //удаляет все существующие элементы с классом .picture
   document.querySelectorAll('.picture').forEach((element) => element.remove());
   const fragment = document.createDocumentFragment();
 
@@ -27,12 +29,12 @@ const renderThumbnails = (pictures) => {
     fragment.append(thumbnail);
   });
 
-  picturesContainerElement.appendChild(fragment);
+  galleryContainerElement.appendChild(fragment);
 };
 
 const onThumbnailsLoaded = (response) => {
   renderThumbnails(response);
-  picturesContainerElement.addEventListener('click', (evt) => onModalOpenClick(evt, response));
+  galleryContainerElement.addEventListener('click', (evt) => onModalOpenClick(evt, response));
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
   initializeFilter(response, debounce(renderThumbnails));
 };
