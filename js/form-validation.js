@@ -139,4 +139,4 @@ const initValidator = () => {
   );
 };
 
-export { initValidator, onSubmit, onMessageClose, onError, clearFormValidation };
+export { initValidator, onSubmit, onError, clearFormValidation };

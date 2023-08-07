@@ -1,4 +1,4 @@
-import { onSubmit, onMessageClose, clearFormValidation } from'./form-validation.js';
+import { onSubmit, clearFormValidation } from'./form-validation.js';
 import { createSlider, onPictureEffect, destroySlider } from './photo-effects.js';
 
 const SizeOptions = {
@@ -25,12 +25,16 @@ const onModalCloseClick = () => {
   closeModal();
 };
 
+const onMessageShutdown = (modalMessage) => {
+  modalMessage.remove();
+};
+
 const onModalCloseEscape = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     const modalMessage = document.querySelector('.success') || document.querySelector('.error');
     if (modalMessage) {
-      onMessageClose(modalMessage);
+      onMessageShutdown(modalMessage);
     } else {
       closeModal();
     }

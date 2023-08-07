@@ -15,9 +15,10 @@ const commentLoaderBtnElement = document.querySelector('.comments-loader');
 
 const createComment = ({avatar, message, name}) => {
   const comment = templateCommentElement.cloneNode(true);
+  const socialCommentPictureElement = comment.querySelector('.social__comment img');
 
-  comment.querySelector('.social__comment img').setAttribute('src', avatar);
-  comment.querySelector('.social__comment img').setAttribute('alt', name);
+  socialCommentPictureElement.setAttribute('src', avatar);
+  socialCommentPictureElement.setAttribute('alt', name);
   comment.querySelector('.social__text').textContent = message;
 
   return comment;
@@ -48,8 +49,8 @@ const getComments = (pictures, currentThumbnail) => {
 
 //выполняет инициализацию отображения комментариев для большой картинки.
 const initComments = (currentThumbnail) => {
-  const thumbnailCommentsNumber = currentThumbnail.querySelector('.picture__comments');
-  bigPictureCommentsNumberElement.textContent = thumbnailCommentsNumber.textContent;
+  const thumbnailCommentsNumberElement = currentThumbnail.querySelector('.picture__comments');
+  bigPictureCommentsNumberElement.textContent = thumbnailCommentsNumberElement.textContent;
   bigPictureCommentsElement.textContent = '';
 
   commentLoaderBtnElement.classList.remove('hidden');
@@ -61,7 +62,7 @@ const initComments = (currentThumbnail) => {
 const processThumbnail = (currentThumbnail) => {
   const thumbnailLikes = currentThumbnail.querySelector('.picture__likes');
   const thumbnailDescription = currentThumbnail.querySelector('.picture__info');
-  bigPictureImgElement.src = currentThumbnail.querySelector('.picture__img').getAttribute('src');
+  bigPictureImgElement.src = currentThumbnail.querySelector('.picture__img').src;
   bigPictureDescriptionElement.textContent = thumbnailDescription.getAttribute('alt');
   bigPictureLikesElement.textContent = thumbnailLikes.textContent;
 };
