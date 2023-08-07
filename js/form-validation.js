@@ -46,10 +46,10 @@ const onError = (text = null) => {
   errorMessageModalElement.addEventListener('click', onOutsideMessageClick);
 };
 
+const descriptionMaxLength = 140;
+
 // валидация описания
-const validateDescriptionField = (value) => {
-  return value.length <= 140
-}
+const validateDescriptionField = (value) => value.length <= descriptionMaxLength;
 
 const onSubmit = (evt) => {
   evt.preventDefault();
@@ -108,4 +108,4 @@ const initValidator = () => {
   );
 }
 
-export { initValidator, onSubmit, onMessageClose, onError };
+export { initValidator, onSubmit, onError };
